@@ -12,35 +12,25 @@ namespace ConsoleGameOfLife
 	{
 		static void Main(string[] args)
 		{
-			Spielfeld spielfeld = new Spielfeld(5, 5);
+			Spielfeld spielfeld = new Spielfeld(3, 3);
 
 			//*
+			spielfeld.setPunkt(2, 0, 1);
+			spielfeld.setPunkt(1, 2, 1);
 			spielfeld.setPunkt(1, 1, 1);
 			spielfeld.setPunkt(2, 1, 1);
-			spielfeld.setPunkt(1, 2, 1);
-			spielfeld.setPunkt(3, 2, 1);
 			spielfeld.setPunkt(2, 2, 1);
-			spielfeld.setPunkt(3, 3, 1);
 			//*/
 			Console.Clear();
 			printSpielfeld(spielfeld);
 
 			Console.ReadLine();
 
-			Console.WriteLine("Anzahl Nachbarn P(4,4): " + spielfeld.getAnzahlNachbarn(4, 4));
+			sbyte zellenstatus = Regeln.calcStatus(spielfeld.getAnzahlNachbarn(1, 1), spielfeld.getPunkt(1, 1));
+			Console.WriteLine("Status der Zelle ist: " + zellenstatus);
+
 
 			Console.ReadLine();
-			return;
-
-			for (int i = 0; i < 4; i++)
-			{
-				spielfeld.setPunkt(i + 1, i, 1);
-				Console.Clear();
-				printSpielfeld(spielfeld);
-				System.Threading.Thread.Sleep(500);
-			}
-
-			Console.Read();
 		}
 
 		private static void printSpielfeld(Spielfeld spielfeld)

@@ -8,6 +8,11 @@ namespace c1_gameoflife.model
 {
 	public class Spielfeld
 	{
+		public const sbyte TOT = 0;
+		public const sbyte LEBT = 1;
+		public const sbyte STIRBT = 2;
+		public const sbyte GEBURT = 3;
+
 		private sbyte[,] spielfeld;
 
 		private int breite;
@@ -70,7 +75,7 @@ namespace c1_gameoflife.model
 					else if (x == punktX && y == punktY)
 						continue;
 
-					if (this.getPunkt(x, y) == 1)
+					if (this.getPunkt(x, y) == 1 || this.getPunkt(x, y) == 2)
 						anzahlNachbarn++;
 				}
 			}
