@@ -30,6 +30,10 @@
 			</Rectangle.Fill>
 		</Rectangle>
 
+		<Canvas x:Name="Cnvs_Spielfeld">
+			
+		</Canvas>
+
 		<StackPanel Grid.Row="0"
 					Grid.Column="0"
 					Grid.ColumnSpan="9">

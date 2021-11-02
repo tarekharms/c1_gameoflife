@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using c1_gameoflife.model;
+
 namespace c1_gameoflife
 {
 	/// <summary>
@@ -21,10 +23,46 @@ namespace c1_gameoflife
 	public partial class MainWindow : Window
 	{
 		bool play = true;
+		Spiel spiel;
 
 		public MainWindow()
 		{
 			InitializeComponent();
+
+			this.spiel = new Spiel();
+			this.spiel.neuesSpielZufaellig(15, 15);
+
+			this.drawSpielfeld();
+		}
+
+		private void drawSpielfeld()
+		{
+			Rectangle rectangle = new Rectangle();
+			rectangle.Stroke = new SolidColorBrush(Colors.Blue);
+			rectangle.Fill = new SolidColorBrush(Colors.Blue);
+
+
+			int hoehe = (int)Cnvs_Spielfeld.Height;
+			int breite = (int)Cnvs_Spielfeld.Width;
+
+			int zellenBreite = hoehe / this.spiel.Spielfeld.Hoehe;
+
+			for(int x = 0; x < this.spiel.Spielfeld.Breite; x++)
+			{
+				Line line = new Line();
+				line.Stroke = new SolidColorBrush(Colors.LightGray);
+				line.StrokeThickness = 5;
+
+				line.X1 = zellenBreite * x;
+				line.Y1 = 0;
+
+				line.X2 = zellenBreite * x;
+				line.Y2 = hoehe;
+
+				Cnvs_Spielfeld.Children.Add(line);
+			}
+
+			Cnvs_Spielfeld.Children.Add(rectangle);
 		}
 
 		private void Button_PlayPause_Click(object sender, RoutedEventArgs e)
