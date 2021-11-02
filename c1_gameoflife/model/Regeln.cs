@@ -41,6 +41,27 @@ namespace c1_gameoflife.model
 			}
 		}
 
+		public static void regelnAnwendenSpielfeld(Spielfeld spielfeld)
+		{
+			for(int y = 0; y < spielfeld.Hoehe; y++)
+			{
+				for(int x = 0; x < spielfeld.Breite; x++)
+				{
+					Regeln.regelnAnwendenZelle(spielfeld, x, y);
+				}
+			}
 
+			spielfeld.parseSpielfeld();
+		}
+
+		public static void regelnAnwendenZelle(Spielfeld spielfeld, int x, int y)
+		{
+			sbyte value = Regeln.calcStatus(
+				spielfeld.getAnzahlNachbarn(x, y),
+				spielfeld.getPunkt(x, y)
+			);
+
+			spielfeld.setPunkt(x, y, value);
+		}
 	}
 }

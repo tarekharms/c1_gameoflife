@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using c1_gameoflife.model;
 
@@ -12,23 +8,21 @@ namespace ConsoleGameOfLife
 	{
 		static void Main(string[] args)
 		{
-			Spielfeld spielfeld = new Spielfeld(3, 3);
+			Spielfeld spielfeld = new Spielfeld(10, 10);
 
-			//*
-			spielfeld.setPunkt(2, 0, 1);
-			spielfeld.setPunkt(1, 2, 1);
-			spielfeld.setPunkt(1, 1, 1);
-			spielfeld.setPunkt(2, 1, 1);
-			spielfeld.setPunkt(2, 2, 1);
-			//*/
+			spielfeld.fillRandom();
+
 			Console.Clear();
 			printSpielfeld(spielfeld);
 
 			Console.ReadLine();
 
-			sbyte zellenstatus = Regeln.calcStatus(spielfeld.getAnzahlNachbarn(1, 1), spielfeld.getPunkt(1, 1));
-			Console.WriteLine("Status der Zelle ist: " + zellenstatus);
-
+			while (true)
+			{
+				Regeln.regelnAnwendenSpielfeld(spielfeld);
+				printSpielfeld(spielfeld);
+				Console.ReadLine();
+			}
 
 			Console.ReadLine();
 		}

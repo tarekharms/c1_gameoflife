@@ -49,6 +49,19 @@ namespace c1_gameoflife.model
 			}
 		}
 
+		public void fillRandom()
+		{
+			Random random = new Random();
+
+			for (int x = 0; x < this.breite; x++)
+			{
+				for (int y = 0; y < this.breite; y++)
+				{
+					this.spielfeld[x, y] = (sbyte)random.Next(0, 2);
+				}
+			}
+		}
+
 		public sbyte getPunkt(int x, int y)
 		{
 			return this.spielfeld[x, y];
@@ -57,6 +70,29 @@ namespace c1_gameoflife.model
 		public void setPunkt(int x, int y, sbyte value)
 		{
 			this.spielfeld[x, y] = value;
+		}
+
+		public void parseSpielfeld()
+		{
+			for(int y = 0; y < this.hoehe; y++)
+			{
+				for(int x = 0; x < this.breite; x++)
+				{
+					this.parseZelle(x, y);
+				}
+			}
+		}
+
+		public void parseZelle(int x, int y)
+		{
+			if (this.spielfeld[x, y] == GEBURT)
+			{
+				this.spielfeld[x, y] = LEBT;
+			}
+			else if (this.spielfeld[x, y] == STIRBT)
+			{
+				this.spielfeld[x, y] = TOT;
+			}
 		}
 
 		public int getAnzahlNachbarn(int punktX, int punktY)
