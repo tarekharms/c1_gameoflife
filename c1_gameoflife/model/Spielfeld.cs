@@ -42,7 +42,7 @@ namespace c1_gameoflife.model
 
 			for(int x = 0; x < this.breite; x++)
 			{
-				for(int y = 0; y < this.breite; y++)
+				for(int y = 0; y < this.hoehe; y++)
 				{
 					this.spielfeld[x,y] = 0;
 				}
@@ -55,7 +55,7 @@ namespace c1_gameoflife.model
 
 			for (int x = 0; x < this.breite; x++)
 			{
-				for (int y = 0; y < this.breite; y++)
+				for (int y = 0; y < this.hoehe; y++)
 				{
 					this.spielfeld[x, y] = (sbyte)random.Next(0, 2);
 				}

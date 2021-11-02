@@ -41,5 +41,10 @@ namespace c1_gameoflife.model
 			this.spielfeld.fillRandom();
 			return this.spielfeld;
 		}
+
+		public void step()
+        {
+			Regeln.regelnAnwendenSpielfeld(spielfeld);
+        }
 	}
 }

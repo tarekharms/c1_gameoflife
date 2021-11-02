@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 using c1_gameoflife.model;
+using c1_gameoflife.view;
 
 namespace c1_gameoflife
 {
@@ -22,6 +23,7 @@ namespace c1_gameoflife
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		private SpielfeldRenderer spielfeldRenderer;
 		bool play = true;
 		Spiel spiel;
 
@@ -30,39 +32,14 @@ namespace c1_gameoflife
 			InitializeComponent();
 
 			this.spiel = new Spiel();
-			this.spiel.neuesSpielZufaellig(15, 15);
+            this.spiel.neuesSpielZufaellig(45, 30);
 
-			this.drawSpielfeld();
+			this.spielfeldRenderer = new SpielfeldRenderer(Cnvs_Spielfeld);
 		}
 
 		private void drawSpielfeld()
 		{
-			Rectangle rectangle = new Rectangle();
-			rectangle.Stroke = new SolidColorBrush(Colors.Blue);
-			rectangle.Fill = new SolidColorBrush(Colors.Blue);
-
-
-			int hoehe = (int)Cnvs_Spielfeld.Height;
-			int breite = (int)Cnvs_Spielfeld.Width;
-
-			int zellenBreite = hoehe / this.spiel.Spielfeld.Hoehe;
-
-			for(int x = 0; x < this.spiel.Spielfeld.Breite; x++)
-			{
-				Line line = new Line();
-				line.Stroke = new SolidColorBrush(Colors.LightGray);
-				line.StrokeThickness = 5;
-
-				line.X1 = zellenBreite * x;
-				line.Y1 = 0;
-
-				line.X2 = zellenBreite * x;
-				line.Y2 = hoehe;
-
-				Cnvs_Spielfeld.Children.Add(line);
-			}
-
-			Cnvs_Spielfeld.Children.Add(rectangle);
+			this.spielfeldRenderer.draw(this.spiel.Spielfeld);
 		}
 
 		private void Button_PlayPause_Click(object sender, RoutedEventArgs e)
@@ -81,7 +58,7 @@ namespace c1_gameoflife
 
 		private void Button_Einzelschritt_Click(object sender, RoutedEventArgs e)
 		{
-
+			this.spiel.step();
 		}
 
 		private void Button_Reset_Click(object sender, RoutedEventArgs e)
@@ -111,5 +88,10 @@ namespace c1_gameoflife
 
 			Lbl_Geschwindigkeit.Text = "Geschwindigkeit: " + value;
 		}
-	}
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+			this.drawSpielfeld();
+        }
+    }
 }
