@@ -1,6 +1,7 @@
 ﻿using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Media;
+using System.Windows;
 using System.Threading;
 using c1_gameoflife.model;
 
@@ -56,6 +57,25 @@ namespace c1_gameoflife.view
                 }
             }
 
+        }
+
+        public int[] getClickedCell(Spielfeld spielfeld, Point mousePoint)
+        {
+            int[] position = new int[2];
+
+            int mouseX = (int)mousePoint.X;
+            int mouseY = (int)mousePoint.Y;
+
+            int hoehe = (int)this.canvas.ActualHeight;
+            int breite = (int)this.canvas.ActualWidth;
+
+            int zellenBreite = hoehe / spielfeld.Hoehe;
+            int horizontalSpacing = (breite - zellenBreite * spielfeld.Breite) / 2;
+
+            position[0] = (mouseX - horizontalSpacing) / zellenBreite;
+            position[1] = mouseY / zellenBreite;
+
+            return position;
         }
     }
 }

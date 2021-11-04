@@ -72,6 +72,20 @@ namespace c1_gameoflife.model
 			this.spielfeld[x, y] = value;
 		}
 
+		public sbyte changePunkt(int x , int y)
+		{
+			if(this.spielfeld[x, y] == Spielfeld.LEBT)
+			{
+				this.spielfeld[x, y] = Spielfeld.TOT;
+			}
+			else if(this.spielfeld[x, y] == Spielfeld.TOT)
+			{
+				this.spielfeld[x, y] = Spielfeld.LEBT;
+			}
+
+			return this.spielfeld[x, y];
+		}
+
 		public void parseSpielfeld()
 		{
 			for(int y = 0; y < this.hoehe; y++)

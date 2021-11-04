@@ -24,22 +24,36 @@ namespace c1_gameoflife
 	public partial class MainWindow : Window
 	{
 		private SpielfeldRenderer spielfeldRenderer;
-		bool play = true;
+		private bool isDrawing = false;
+		bool play = false;
 		Spiel spiel;
 
 		public MainWindow()
 		{
+			this.spiel = new Spiel();
+
 			InitializeComponent();
 
-			this.spiel = new Spiel();
-            this.spiel.neuesSpielZufaellig(45, 30);
+			this.spiel.SpielfeldUpdate += onSpielfeldUpdate;
+			this.spiel.neuesSpiel(100, 50);
 
 			this.spielfeldRenderer = new SpielfeldRenderer(Cnvs_Spielfeld);
 		}
 
 		private void drawSpielfeld()
 		{
+			if (this.isDrawing) return;
+
+			this.isDrawing = true;
 			this.spielfeldRenderer.draw(this.spiel.Spielfeld);
+			this.isDrawing = false;
+		}
+
+		private void onSpielfeldUpdate(object sender, EventArgs e)
+		{
+			long now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
+
+			this.Dispatcher.Invoke(this.drawSpielfeld);
 		}
 
 		private void Button_PlayPause_Click(object sender, RoutedEventArgs e)
@@ -48,11 +62,13 @@ namespace c1_gameoflife
 
 			if (this.play)
 			{
-				PlayStatus.Text = "Status: Play";
+				this.spiel.Start();
+				Btn_PlayPause.Content = "Pause";
 			} 
 			else
 			{
-				PlayStatus.Text = "Status: Stop";
+				this.spiel.Stop();
+				Btn_PlayPause.Content = "Play";
 			}
 		}
 
@@ -63,7 +79,8 @@ namespace c1_gameoflife
 
 		private void Button_Reset_Click(object sender, RoutedEventArgs e)
 		{
-
+			this.spiel.neuesSpielZufaellig(100, 50);
+			this.drawSpielfeld();
 		}
 
 		private void Button_Speichern_Click(object sender, RoutedEventArgs e)
@@ -85,6 +102,8 @@ namespace c1_gameoflife
 		{
 			int value = (int)e.NewValue;
 
+			this.spiel.Geschwindigkeit = value;
+
 
 			Lbl_Geschwindigkeit.Text = "Geschwindigkeit: " + value;
 		}
@@ -93,5 +112,30 @@ namespace c1_gameoflife
         {
 			this.drawSpielfeld();
         }
-    }
+
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+		{
+			this.spiel.Stop();
+		}
+
+		private void Cnvs_Spielfeld_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+			int[] pos;
+			Point mousePos = e.GetPosition(Cnvs_Spielfeld);
+			pos = this.spielfeldRenderer.getClickedCell(this.spiel.Spielfeld, mousePos);
+
+			CanvasClicked.Text = "Clicked: Yes Pos(" + pos[0] + ";" + pos[1] + ")";
+
+			if (pos[0] < 0 || pos[0] > this.spiel.Spielfeld.Breite
+				|| pos[1] < 0 || pos[1] > this.spiel.Spielfeld.Hoehe)
+			{
+				return;
+			}
+
+			
+
+			this.spiel.Spielfeld.changePunkt(pos[0], pos[1]);
+			this.drawSpielfeld();
+		}
+	}
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:c1_gameoflife"
         mc:Ignorable="d"
-        Title="Game Of Life" MinHeight="450" Height="450" MinWidth="800" Width="800" SizeChanged="Window_SizeChanged" >
+        Title="Game Of Life" MinHeight="450" Height="450" MinWidth="800" Width="800" SizeChanged="Window_SizeChanged" Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="28*"/>
@@ -16,23 +16,35 @@
 
         <StackPanel Grid.Row="0"
 		    		Grid.Column="0"
-		    		Grid.ColumnSpan="9" Margin="0,0,-0.4,3.2"
-                    Panel.ZIndex="5">
+		    		Grid.ColumnSpan="9"
+                    Panel.ZIndex="5"
+					IsHitTestVisible="False">
 
             <TextBlock x:Name="PlayStatus"
 		    			   Text="Status: Play"/>
 
-            <TextBlock x:Name="Generation"
+			<TextBlock x:Name="Generation"
 		    			   Text="Generation: 0"/>
 
-        </StackPanel>
+			<TextBlock x:Name="CanvasClicked"
+		    			   Text="Clicked: No"/>
+
+		</StackPanel>
 
         <Canvas x:Name="Cnvs_Spielfeld" 
                 Grid.Row="0"
-                Background="Coral"
-                Margin="0"/>
+                Background="White"
+                Margin="0"
+				MouseDown="Cnvs_Spielfeld_MouseDown"/>
 
 
+		<Border Grid.Column="0"
+				Grid.Row="1"
+				BorderThickness="0 3 0 0"
+				BorderBrush="Blue">
+			
+		</Border>
+		
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -49,18 +61,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
-            <Button Grid.Column="0"
-		    		Grid.Row="0"
-		    		Grid.ColumnSpan="2"
-                    Grid.RowSpan="2"
-		    		Content="Play/Pause"
-		    		Panel.ZIndex="2"
-                    Height="35"
-                    Margin="10 20 10 20"
-		    		Click="Button_PlayPause_Click"/>
-
-
+			
             <Rectangle 
 		    		   Grid.Column="0"
 		    		   Grid.ColumnSpan="3" Margin="0,326,87.8,0.4" Grid.RowSpan="2"
@@ -70,44 +71,94 @@
                 </Rectangle.Fill>
             </Rectangle>
 
-            <Button Grid.Column="2"
-		    		Grid.Row="1"
-		    		Content="->"
-		    		Panel.ZIndex="2"
-		    		Margin="10.2,0.6,9.8,20"
-		    		Click="Button_Einzelschritt_Click"/>
-
-
             <Rectangle 
 		    		   Grid.Column="2" Grid.ColumnSpan="2" Margin="0.2,326,87.8,0.4" Grid.RowSpan="2"
 		    >
                 <Rectangle.Fill>
                     <SolidColorBrush Color="LightCoral" />
                 </Rectangle.Fill>
-            </Rectangle>
+			</Rectangle>
 
-            <Button Grid.Column="3"
-		    		Grid.Row="2"
+			<Button x:Name="Btn_PlayPause"
+					Grid.Column="0"
+		    		Grid.Row="0"
+		    		Grid.ColumnSpan="2"
+                    Grid.RowSpan="2"
+		    		Content="Play"
+		    		Panel.ZIndex="2"
+                    Height="35"
+                    Margin="10 20 10 20"
+		    		Click="Button_PlayPause_Click"/>
+
+			<Button Grid.Column="2"
+		    		Grid.Row="0"
+					Grid.RowSpan="2"
+		    		Content="->"
+					Height="35"
+		    		Panel.ZIndex="2"
+		    		Margin="10 20 10 20"
+		    		Click="Button_Einzelschritt_Click"/>
+
+			<Button Grid.Column="3"
+		    		Grid.Row="0"
+					Grid.RowSpan="2"
+					Height="35"
 		    		Content="Reset"
 		    		Panel.ZIndex="2"
-		    		Margin="10.2,0.6,9.8,20"
+		    		Margin="10 20 10 20"
 		    		Click="Button_Reset_Click"/>
 
+			<Button Grid.Column="4"
+		    		Grid.Row="0"
+					Grid.RowSpan="2"
+		    		Content="Speichern"
+		    		Panel.ZIndex="2"
+					Height="35"
+		    		Margin="10 20 10 20"
+		    		Click="Button_Speichern_Click"/>
 
-            <Rectangle 
+			<Button Grid.Column="5"
+		    		Grid.Row="0"
+					Grid.RowSpan="2"
+					Height="35"
+		    		Content="Laden"
+		    		Panel.ZIndex="2"
+		    		Margin="10 20 10 20"
+		    		Click="Button_Laden_Click"/>
+
+			<TextBlock x:Name="Lbl_Geschwindigkeit"
+		    		   Grid.Column="6"
+		    		   Grid.Row="1"
+		    		   Grid.ColumnSpan="2"
+		    		   Text="Geschwindigkeit: 50"
+		    		   Margin="10.4,1.6,9.6,10"
+		    		   Panel.ZIndex="2"/>
+
+			<Slider Grid.Column="6"
+		    		Grid.Row="0"
+		    		Grid.ColumnSpan="2"
+		    		Panel.ZIndex="2"
+		    		Margin="10 15 10 5"
+		    		Maximum="100"
+		    		Minimum="1"
+		    		Value="50"
+		    		ValueChanged="Slider_Geschwindigkeit_Changed"/>
+
+			<Button Grid.Column="8"
+		    		Grid.Row="0"
+					Grid.RowSpan="2"
+		    		Content="Info"
+		    		Panel.ZIndex="2"
+		    		Margin="10 20 10 20"/>
+
+
+			<Rectangle 
 		    		   Grid.Column="3" Grid.ColumnSpan="2" Margin="0.2,326,88.6,0.4" Grid.RowSpan="2"
 		    >
                 <Rectangle.Fill>
                     <SolidColorBrush Color="LightCyan" />
                 </Rectangle.Fill>
             </Rectangle>
-
-            <Button Grid.Column="4"
-		    		Grid.Row="2"
-		    		Content="Speichern"
-		    		Panel.ZIndex="2"
-		    		Margin="10.2,0.6,9.6,20"
-		    		Click="Button_Speichern_Click"/>
 
 
             <Rectangle 
@@ -117,13 +168,6 @@
                     <SolidColorBrush Color="LightGray" />
                 </Rectangle.Fill>
             </Rectangle>
-
-            <Button Grid.Column="5"
-		    		Grid.Row="2"
-		    		Content="Laden"
-		    		Panel.ZIndex="2"
-		    		Margin="10.4,0.6,9.6,20"
-		    		Click="Button_Laden_Click"/>
 
 
             <Rectangle 
@@ -135,24 +179,6 @@
                 </Rectangle.Fill>
             </Rectangle>
 
-            <TextBlock x:Name="Lbl_Geschwindigkeit"
-		    		   Grid.Column="6"
-		    		   Grid.Row="2"
-		    		   Grid.ColumnSpan="2"
-		    		   Text="Geschwindigkeit: 50"
-		    		   Margin="10.4,1.6,9.6,10"
-		    		   Panel.ZIndex="2"/>
-
-            <Slider Grid.Column="6"
-		    		Grid.Row="2"
-		    		Grid.ColumnSpan="2"
-		    		Panel.ZIndex="2"
-		    		Margin="10.4,0.6,9.6,49"
-		    		Maximum="100"
-		    		Minimum="0"
-		    		Value="50"
-		    		ValueChanged="Slider_Geschwindigkeit_Changed"/>
-
 
             <Rectangle 
 		    		   Grid.Column="8" Margin="0.4,326,-0.4,0.4" Grid.RowSpan="2"
@@ -161,12 +187,6 @@
                     <SolidColorBrush Color="LightCoral" />
                 </Rectangle.Fill>
             </Rectangle>
-
-            <Button Grid.Column="8"
-		    		Grid.Row="2"
-		    		Content="Info"
-		    		Panel.ZIndex="2"
-		    		Margin="10.4,0.6,9.6,20"/>
         </Grid>
     </Grid>
 </Window>
