@@ -42,7 +42,7 @@ namespace c1_gameoflife.model
 
 			for(int x = 0; x < this.breite; x++)
 			{
-				for(int y = 0; y < this.breite; y++)
+				for(int y = 0; y < this.hoehe; y++)
 				{
 					this.spielfeld[x,y] = 0;
 				}
@@ -55,7 +55,7 @@ namespace c1_gameoflife.model
 
 			for (int x = 0; x < this.breite; x++)
 			{
-				for (int y = 0; y < this.breite; y++)
+				for (int y = 0; y < this.hoehe; y++)
 				{
 					this.spielfeld[x, y] = (sbyte)random.Next(0, 2);
 				}
@@ -70,6 +70,20 @@ namespace c1_gameoflife.model
 		public void setPunkt(int x, int y, sbyte value)
 		{
 			this.spielfeld[x, y] = value;
+		}
+
+		public sbyte changePunkt(int x , int y)
+		{
+			if(this.spielfeld[x, y] == Spielfeld.LEBT)
+			{
+				this.spielfeld[x, y] = Spielfeld.TOT;
+			}
+			else if(this.spielfeld[x, y] == Spielfeld.TOT)
+			{
+				this.spielfeld[x, y] = Spielfeld.LEBT;
+			}
+
+			return this.spielfeld[x, y];
 		}
 
 		public void parseSpielfeld()
