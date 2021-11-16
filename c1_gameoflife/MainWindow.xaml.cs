@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.Win32;
 
 using c1_gameoflife.model;
 using c1_gameoflife.view;
@@ -25,7 +15,6 @@ namespace c1_gameoflife
 	{
 		private SpielfeldRenderer spielfeldRenderer;
 		private bool isDrawing = false;
-		private int speedLock = 1;
 		bool play = false;
 		Spiel spiel;
 
@@ -52,6 +41,8 @@ namespace c1_gameoflife
 
 		private void drawSpielfeld()
 		{
+			Btn_Generation.Content = "Gen.: " + this.spiel.Generation;
+
 			if (this.isDrawing) return;
 
 			this.isDrawing = true;
@@ -66,6 +57,10 @@ namespace c1_gameoflife
 			this.Dispatcher.Invoke(this.drawSpielfeld, System.Windows.Threading.DispatcherPriority.Background);
 		}
 
+		private void Button_Generation_Click(object sender, RoutedEventArgs e)
+		{
+		}
+
 		private void Button_PlayPause_Click(object sender, RoutedEventArgs e)
 		{
 			this.play = !this.play;
@@ -74,7 +69,7 @@ namespace c1_gameoflife
 			{
 				this.spiel.Start();
 				Btn_PlayPause.Content = "Pause";
-			} 
+			}
 			else
 			{
 				this.spiel.Stop();
@@ -89,23 +84,78 @@ namespace c1_gameoflife
 
 		private void Button_Reset_Click(object sender, RoutedEventArgs e)
 		{
-			this.testCase();
-			this.drawSpielfeld();
+			if (this.play)
+			{
+				this.spiel.Stop();
+				Btn_PlayPause.Content = "Play";
+			}
+
+			NeuesSpiel window = new NeuesSpiel();
+
+			window.Owner = this;
+			window.ShowDialog();
+
+			if(window.Submitted)
+			{
+				if(window.Zufaellig)
+                {
+					this.spiel.neuesSpielZufaellig(
+						window.Breite,
+						window.Hoehe
+					);
+                }
+				else
+                {
+					this.spiel.neuesSpiel(
+						window.Breite,
+						window.Hoehe
+					);
+				}
+				
+				this.drawSpielfeld();
+			}
 		}
 
 		private void Button_Speichern_Click(object sender, RoutedEventArgs e)
 		{
+			SaveFileDialog dialog = new SaveFileDialog();
+			dialog.DefaultExt = ".golsave";
 
+			bool? result = dialog.ShowDialog();
+
+			if(result == true)
+            {
+				SavegameHandler.save(this.spiel.Spielfeld, dialog.FileName);
+			}
 		}
 
 		private void Button_Laden_Click(object sender, RoutedEventArgs e)
 		{
+			OpenFileDialog dialog = new OpenFileDialog();
+			dialog.DefaultExt = ".golsave";
 
+			bool? result = dialog.ShowDialog();
+
+			if (result == true)
+			{
+				this.spiel.neuesSpiel(0, 0);
+				this.spiel.Spielfeld = SavegameHandler.load(dialog.FileName);
+				this.drawSpielfeld();
+			}
 		}
 
 		private void Button_Info_Click(object sender, RoutedEventArgs e)
 		{
+			string fullpath = System.IO.Path.GetFullPath("./praesentation.pdf");
 
+			if(System.IO.File.Exists(fullpath))
+            {
+				System.Diagnostics.Process.Start(fullpath);
+            }
+			else
+            {
+				MessageBox.Show("Datei wurde nicht gefunden.");
+            }
 		}
 
 		private void Slider_Geschwindigkeit_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)

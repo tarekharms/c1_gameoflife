@@ -1,0 +1,76 @@
+﻿<Window x:Class="c1_gameoflife.view.NeuesSpiel"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:c1_gameoflife.view"
+        mc:Ignorable="d"
+        Title="Neues Spiel" Height="250" Width="350">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <Button Grid.Column="0"
+                Grid.Row="4"
+                Content="Abrechen"
+                Height="30"
+                Width="75"
+                Click="Button_Abort_Click"/>
+
+        <Button x:Name="Cmd_Submit" 
+                Grid.Column="1"
+                Grid.Row="4"
+                Content="Okay"
+                Height="30"
+                Width="75"
+                Click="Cmd_Submit_Click"/>
+        
+
+        <TextBlock Grid.Column="0"
+                   Grid.Row="1"
+                   Text="Breite: "
+                   Margin="50 0 0 0"/>
+
+        <TextBox x:Name="TxtBx_Breite" 
+                 Grid.Column="1"
+                 Grid.Row="1"
+                 Text="20"
+                 Margin="5 0 40 5"
+                 TextChanged="TxtBx_Breite_TextChanged"/>
+        
+
+        <TextBlock Grid.Column="0"
+                   Grid.Row="2"
+                   Text="Höhe: "
+                   Margin="50 0 0 0"/>
+
+        <TextBox x:Name="TxtBx_Hoehe" 
+                 Grid.Column="1"
+                 Grid.Row="2"
+                 Margin="5 0 40 5"
+                 Text="20"
+                 TextChanged="TxtBx_Hoehe_TextChanged"/>
+        
+
+        <TextBlock Grid.Column="0"
+                   Grid.Row="3"
+                   Text="Zufällig: "
+                   Margin="50 0 0 0"/>
+
+        <CheckBox x:Name="ChckBx_zufaellig" 
+                  Grid.Row="3"
+                  Grid.Column="1"
+                  Margin="5 0 40 5"
+                  Checked="CheckBox_Checked"
+                  Unchecked="CheckBox_Checked"/>
+    </Grid>
+</Window>

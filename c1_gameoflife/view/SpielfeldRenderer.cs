@@ -35,7 +35,7 @@ namespace c1_gameoflife.view
 
                     if (spielfeld.getPunkt(x, y) == Spielfeld.LEBT)
                     {
-                        fill = new SolidColorBrush(Colors.Blue);
+                        fill = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00416e"));
                     }
                     else
                     {
@@ -45,7 +45,7 @@ namespace c1_gameoflife.view
                     Rectangle rect = new Rectangle()
                     {
                         Stroke = new SolidColorBrush(Colors.LightGray),
-                        StrokeThickness = 1,
+                        StrokeThickness = 0.5,
                         Width = zellenBreite,
                         Height = zellenBreite,
                         Fill = fill

@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:c1_gameoflife"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style TargetType="Button">
+            <Setter Property="Background"
+                    Value="#00416e"/>
+            <Setter Property="Foreground"
+                    Value="White"/>
+        </Style>
     </Application.Resources>
 </Application>

@@ -24,7 +24,7 @@ namespace ConsoleGameOfLife
 				Console.ReadLine();
 			}
 
-			Console.ReadLine();
+			//Console.ReadLine();
 		}
 
 		private static void printSpielfeld(Spielfeld spielfeld)

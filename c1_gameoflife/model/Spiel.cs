@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace c1_gameoflife.model
 {
 	public class Spiel
 	{
 		private int geschwindigkeit;
+
+		private int generation;
+		public int Generation
+        {
+			get
+            {
+				return this.generation;
+            }
+        }
 		
 		public int Geschwindigkeit
 		{
@@ -36,12 +41,17 @@ namespace c1_gameoflife.model
 			{
 				return this.spielfeld;
 			}
+            set
+            {
+				this.spielfeld = value;
+            }
 		}
 
 		
 		public Spiel()
 		{
 			this.geschwindigkeit = 10;
+			this.generation = 0;
 			this.play = false;
 		}
 
@@ -67,7 +77,7 @@ namespace c1_gameoflife.model
 				if (this.locked) continue;
 
 				this.step(); 
-				Thread.Sleep(200 + 2000 / this.geschwindigkeit);
+				Thread.Sleep(400 + 2000 / this.geschwindigkeit);
 			}
 		}
 
@@ -90,6 +100,7 @@ namespace c1_gameoflife.model
 		public Spielfeld neuesSpiel(int breite, int hoehe)
 		{
 			this.spielfeld = new Spielfeld(breite, hoehe);
+			this.generation = 0;
 
 			return this.spielfeld;
 		}
@@ -98,11 +109,13 @@ namespace c1_gameoflife.model
 		{
 			this.spielfeld = new Spielfeld(breite, hoehe);
 			this.spielfeld.fillRandom();
+			this.generation = 0;
 			return this.spielfeld;
 		}
 
 		public void step()
-        {
+		{
+			this.generation++;
 			Regeln.regelnAnwendenSpielfeld(spielfeld);
 			this.OnSpielfeldUpdate(new EventArgs());
         }
