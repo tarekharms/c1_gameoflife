@@ -25,6 +25,7 @@ namespace c1_gameoflife
 	{
 		private SpielfeldRenderer spielfeldRenderer;
 		private bool isDrawing = false;
+		private int speedLock = 1;
 		bool play = false;
 		Spiel spiel;
 
@@ -35,9 +36,18 @@ namespace c1_gameoflife
 			InitializeComponent();
 
 			this.spiel.SpielfeldUpdate += onSpielfeldUpdate;
-			this.spiel.neuesSpiel(100, 50);
+			this.spiel.neuesSpiel(10, 10);
 
 			this.spielfeldRenderer = new SpielfeldRenderer(Cnvs_Spielfeld);
+		}
+
+		private void testCase()
+		{
+			int breite = 50;
+			int hoehe = 50;
+			int felder = breite * hoehe;
+			this.spiel.neuesSpielZufaellig(breite, hoehe);
+			
 		}
 
 		private void drawSpielfeld()
@@ -45,15 +55,15 @@ namespace c1_gameoflife
 			if (this.isDrawing) return;
 
 			this.isDrawing = true;
+			this.spiel.Lock();
 			this.spielfeldRenderer.draw(this.spiel.Spielfeld);
+			this.spiel.Unlock();
 			this.isDrawing = false;
 		}
 
 		private void onSpielfeldUpdate(object sender, EventArgs e)
 		{
-			long now = DateTimeOffset.Now.ToUnixTimeMilliseconds();
-
-			this.Dispatcher.Invoke(this.drawSpielfeld);
+			this.Dispatcher.Invoke(this.drawSpielfeld, System.Windows.Threading.DispatcherPriority.Background);
 		}
 
 		private void Button_PlayPause_Click(object sender, RoutedEventArgs e)
@@ -79,7 +89,7 @@ namespace c1_gameoflife
 
 		private void Button_Reset_Click(object sender, RoutedEventArgs e)
 		{
-			this.spiel.neuesSpielZufaellig(100, 50);
+			this.testCase();
 			this.drawSpielfeld();
 		}
 
@@ -100,12 +110,20 @@ namespace c1_gameoflife
 
 		private void Slider_Geschwindigkeit_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
 		{
-			int value = (int)e.NewValue;
+				//Slider slider = (Slider)sender;
 
-			this.spiel.Geschwindigkeit = value;
+				//slider.Value = 1;
+				//this.spiel.Geschwindigkeit = 1;
+
+				//Lbl_Geschwindigkeit.Text = "Geschwindigkeit: 1";
+		
+				int value = (int)e.NewValue;
+
+				this.spiel.Geschwindigkeit = value;
 
 
-			Lbl_Geschwindigkeit.Text = "Geschwindigkeit: " + value;
+				Lbl_Geschwindigkeit.Text = "Geschwindigkeit: " + value;
+			
 		}
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)

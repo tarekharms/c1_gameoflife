@@ -24,6 +24,7 @@ namespace c1_gameoflife.model
 		}
 
 		private bool play;
+		private bool locked = false;
 		private Thread spielThread;
 
 		public event EventHandler SpielfeldUpdate;
@@ -63,9 +64,21 @@ namespace c1_gameoflife.model
 		{
 			while(this.play)
 			{
-				this.step();
+				if (this.locked) continue;
+
+				this.step(); 
 				Thread.Sleep(200 + 2000 / this.geschwindigkeit);
 			}
+		}
+
+		public void Lock()
+		{
+			this.locked = true;
+		}
+
+		public void Unlock()
+		{
+			this.locked = false;
 		}
 
 		protected virtual void OnSpielfeldUpdate(EventArgs e)
