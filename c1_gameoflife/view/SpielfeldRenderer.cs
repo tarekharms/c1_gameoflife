@@ -45,6 +45,7 @@ namespace c1_gameoflife.view
                     Rectangle rect = new Rectangle()
                     {
                         Stroke = new SolidColorBrush(Colors.LightGray),
+                        StrokeThickness = 1,
                         Width = zellenBreite,
                         Height = zellenBreite,
                         Fill = fill
