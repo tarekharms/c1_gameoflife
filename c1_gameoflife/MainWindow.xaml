@@ -31,12 +31,16 @@
 				BorderThickness="1"
 				BorderBrush="LightGray"
 				Margin="75 10 75 10">
+			<Image x:Name="Img_Spielfeld"
+				   Grid.Row="0"
+				   Margin="2"
+				   MouseDown="Img_Spielfeld_MouseDown"/>
 			
-			<Canvas x:Name="Cnvs_Spielfeld" 
+			<!--<Canvas x:Name="Cnvs_Spielfeld" 
                 Grid.Row="0"
 				Margin="2"
                 Background="White"
-				MouseDown="Cnvs_Spielfeld_MouseDown"/>
+				MouseDown="Cnvs_Spielfeld_MouseDown"/>-->
 		</Border>
 
 

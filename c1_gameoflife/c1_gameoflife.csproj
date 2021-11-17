@@ -56,10 +56,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="model\SavegameHandler.cs" />
+    <Compile Include="view\ISpielfeldRenderer.cs" />
     <Compile Include="view\NeuesSpiel.xaml.cs">
       <DependentUpon>NeuesSpiel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\SpielfeldRenderer.cs" />
+    <Compile Include="view\SpielfeldRendererCanvas.cs" />
+    <Compile Include="view\SpielfeldRendererBitmap.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

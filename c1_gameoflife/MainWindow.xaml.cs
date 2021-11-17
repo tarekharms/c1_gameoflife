@@ -13,7 +13,7 @@ namespace c1_gameoflife
 	/// </summary>
 	public partial class MainWindow : Window
 	{
-		private SpielfeldRenderer spielfeldRenderer;
+		private ISpielfeldRenderer spielfeldRenderer;
 		private bool isDrawing = false;
 		bool play = false;
 		Spiel spiel;
@@ -27,7 +27,7 @@ namespace c1_gameoflife
 			this.spiel.SpielfeldUpdate += onSpielfeldUpdate;
 			this.spiel.neuesSpiel(10, 10);
 
-			this.spielfeldRenderer = new SpielfeldRenderer(Cnvs_Spielfeld);
+			this.spielfeldRenderer = new SpielfeldRendererBitmap(Img_Spielfeld);
 		}
 
 		private void testCase()
@@ -47,7 +47,7 @@ namespace c1_gameoflife
 
 			this.isDrawing = true;
 			this.spiel.Lock();
-			this.spielfeldRenderer.draw(this.spiel.Spielfeld);
+			this.spielfeldRenderer.Draw(this.spiel.Spielfeld);
 			this.spiel.Unlock();
 			this.isDrawing = false;
 		}
@@ -190,7 +190,7 @@ namespace c1_gameoflife
 		{
 			int[] pos;
 			Point mousePos = e.GetPosition(Cnvs_Spielfeld);
-			pos = this.spielfeldRenderer.getClickedCell(this.spiel.Spielfeld, mousePos);
+			pos = this.spielfeldRenderer.GetClickedCell(this.spiel.Spielfeld, mousePos);
 
 			CanvasClicked.Text = "Clicked: Yes Pos(" + pos[0] + ";" + pos[1] + ")";
 
@@ -204,6 +204,11 @@ namespace c1_gameoflife
 
 			this.spiel.Spielfeld.changePunkt(pos[0], pos[1]);
 			this.drawSpielfeld();
+		}
+
+		private void Img_Spielfeld_MouseDown(object sender, MouseButtonEventArgs e)
+		{
+
 		}
 	}
 }

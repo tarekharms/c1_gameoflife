@@ -7,16 +7,16 @@ using c1_gameoflife.model;
 
 namespace c1_gameoflife.view
 {
-    public class SpielfeldRenderer
+    public class SpielfeldRendererCanvas : ISpielfeldRenderer
     {
         private Canvas canvas;
 
-        public SpielfeldRenderer(Canvas canvas)
+        public SpielfeldRendererCanvas(Canvas canvas)
         {
             this.canvas = canvas;
         }
         
-        public void draw(Spielfeld spielfeld)
+        public void Draw(Spielfeld spielfeld)
         {
             this.canvas.Children.Clear();
 
@@ -60,7 +60,7 @@ namespace c1_gameoflife.view
 
         }
 
-        public int[] getClickedCell(Spielfeld spielfeld, Point mousePoint)
+        public int[] GetClickedCell(Spielfeld spielfeld, Point mousePoint)
         {
             int[] position = new int[2];
 
