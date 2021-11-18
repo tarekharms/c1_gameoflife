@@ -77,7 +77,7 @@ namespace c1_gameoflife.model
 				if (this.locked) continue;
 
 				this.step(); 
-				Thread.Sleep(400 + 2000 / this.geschwindigkeit);
+				Thread.Sleep(100 + 1500 / this.geschwindigkeit);
 			}
 		}
 

@@ -2,7 +2,6 @@
 using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows;
-using System.Threading;
 using c1_gameoflife.model;
 
 namespace c1_gameoflife.view
@@ -10,9 +9,11 @@ namespace c1_gameoflife.view
     public class SpielfeldRendererCanvas : ISpielfeldRenderer
     {
         private Canvas canvas;
+        private Border border;
 
-        public SpielfeldRendererCanvas(Canvas canvas)
+        public SpielfeldRendererCanvas(Canvas canvas, Border border)
         {
+            this.border = border;
             this.canvas = canvas;
         }
         

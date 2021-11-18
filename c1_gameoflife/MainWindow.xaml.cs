@@ -27,17 +27,8 @@ namespace c1_gameoflife
 			this.spiel.SpielfeldUpdate += onSpielfeldUpdate;
 			this.spiel.neuesSpiel(10, 10);
 
-			this.spielfeldRenderer = new SpielfeldRendererBitmap(Img_Spielfeld);
-		}
-
-		private void testCase()
-		{
-			int breite = 50;
-			int hoehe = 50;
-			int felder = breite * hoehe;
-			this.spiel.neuesSpielZufaellig(breite, hoehe);
-			
-		}
+			this.spielfeldRenderer = new SpielfeldRendererBitmap(Img_Spielfeld, Border_Spielfeld);
+        }
 
 		private void drawSpielfeld()
 		{
@@ -189,8 +180,8 @@ namespace c1_gameoflife
 		private void Cnvs_Spielfeld_MouseDown(object sender, MouseButtonEventArgs e)
 		{
 			int[] pos;
-			Point mousePos = e.GetPosition(Cnvs_Spielfeld);
-			pos = this.spielfeldRenderer.GetClickedCell(this.spiel.Spielfeld, mousePos);
+            Point mousePos = e.GetPosition(Img_Spielfeld);
+            pos = this.spielfeldRenderer.GetClickedCell(this.spiel.Spielfeld, mousePos);
 
 			CanvasClicked.Text = "Clicked: Yes Pos(" + pos[0] + ";" + pos[1] + ")";
 
@@ -208,7 +199,22 @@ namespace c1_gameoflife
 
 		private void Img_Spielfeld_MouseDown(object sender, MouseButtonEventArgs e)
 		{
+			int[] pos;
+			Point mousePos = e.GetPosition(Img_Spielfeld);
+			pos = this.spielfeldRenderer.GetClickedCell(this.spiel.Spielfeld, mousePos);
 
+			CanvasClicked.Text = "Clicked: Yes Pos(" + pos[0] + ";" + pos[1] + ")";
+
+			if (pos[0] < 0 || pos[0] > this.spiel.Spielfeld.Breite
+				|| pos[1] < 0 || pos[1] > this.spiel.Spielfeld.Hoehe)
+			{
+				return;
+			}
+
+
+
+			this.spiel.Spielfeld.changePunkt(pos[0], pos[1]);
+			this.drawSpielfeld();
 		}
 	}
 }

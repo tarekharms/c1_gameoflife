@@ -85,8 +85,8 @@ namespace c1_gameoflife.view
         private void validateInputs()
         {
             if (
-                this.hoehe > 4 && this.hoehe < 51 &&
-                this.breite > 4 && this.breite < 101
+                this.hoehe > 4 && this.hoehe < 250 &&
+                this.breite > 4 && this.breite < 500
                 )
             {
                 this.submitEnabled = true;

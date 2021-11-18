@@ -26,22 +26,18 @@
 
 		</StackPanel>
 
-		<Border Grid.Column="0"
+        <Border x:Name="Border_Spielfeld" 
+                Grid.Column="0"
 				Grid.Row="0"
 				BorderThickness="1"
 				BorderBrush="LightGray"
 				Margin="75 10 75 10">
-			<Image x:Name="Img_Spielfeld"
+            <Image x:Name="Img_Spielfeld"
 				   Grid.Row="0"
 				   Margin="2"
+                   Stretch="Fill"
 				   MouseDown="Img_Spielfeld_MouseDown"/>
-			
-			<!--<Canvas x:Name="Cnvs_Spielfeld" 
-                Grid.Row="0"
-				Margin="2"
-                Background="White"
-				MouseDown="Cnvs_Spielfeld_MouseDown"/>-->
-		</Border>
+        </Border>
 
 
 		<Border Grid.Column="0"
