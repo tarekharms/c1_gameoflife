@@ -15,36 +15,26 @@ namespace c1_gameoflife.model
 
 		private sbyte[,] spielfeld;
 
-		private int breite;
 		public int Breite
 		{
-			get { return this.breite; }
+			get { return this.spielfeld.GetLength(0); }
 		}
 
 		public int Hoehe
 		{
-			get { return this.hoehe; }
+			get { return this.spielfeld.GetLength(1); }
 		}
 
-		private int hoehe;
 
 		public Spielfeld(int breite, int hoehe)
 		{
-			this.breite = breite;
-			this.hoehe = hoehe;
+			this.spielfeld = new sbyte[breite, hoehe];
 
-			this.initialise();
-		}
-
-		private void initialise()
-		{
-			this.spielfeld = new sbyte[this.breite, this.hoehe];
-
-			for(int x = 0; x < this.breite; x++)
+			for (int x = 0; x < breite; x++)
 			{
-				for(int y = 0; y < this.hoehe; y++)
+				for (int y = 0; y < hoehe; y++)
 				{
-					this.spielfeld[x,y] = 0;
+					this.spielfeld[x, y] = 0;
 				}
 			}
 		}
@@ -53,9 +43,9 @@ namespace c1_gameoflife.model
 		{
 			Random random = new Random();
 
-			for (int x = 0; x < this.breite; x++)
+			for (int x = 0; x < this.Breite; x++)
 			{
-				for (int y = 0; y < this.hoehe; y++)
+				for (int y = 0; y < this.Hoehe; y++)
 				{
 					this.spielfeld[x, y] = (sbyte)random.Next(0, 2);
 				}
@@ -88,16 +78,16 @@ namespace c1_gameoflife.model
 
 		public void parseSpielfeld()
 		{
-			for(int y = 0; y < this.hoehe; y++)
+			for(int y = 0; y < this.Hoehe; y++)
 			{
-				for(int x = 0; x < this.breite; x++)
+				for(int x = 0; x < this.Breite; x++)
 				{
 					this.parseZelle(x, y);
 				}
 			}
 		}
 
-		public void parseZelle(int x, int y)
+		private void parseZelle(int x, int y)
 		{
 			if (this.spielfeld[x, y] == GEBURT)
 			{
@@ -115,12 +105,12 @@ namespace c1_gameoflife.model
 
 			for(int x = punktX - 1; x <= punktX + 1; x++)
 			{
-				if (x < 0 || x >= this.breite)
+				if (x < 0 || x >= this.Breite)
 					continue;
 
 				for(int y = punktY - 1; y <= punktY + 1; y++)
 				{
-					if (y < 0 || y >= this.hoehe)
+					if (y < 0 || y >= this.Hoehe)
 						continue;
 					else if (x == punktX && y == punktY)
 						continue;
