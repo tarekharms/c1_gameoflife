@@ -150,21 +150,13 @@ namespace c1_gameoflife
 		}
 
 		private void Slider_Geschwindigkeit_Changed(object sender, RoutedPropertyChangedEventArgs<double> e)
-		{
-				//Slider slider = (Slider)sender;
-
-				//slider.Value = 1;
-				//this.spiel.Geschwindigkeit = 1;
-
-				//Lbl_Geschwindigkeit.Text = "Geschwindigkeit: 1";
-		
+		{		
 				int value = (int)e.NewValue;
 
 				this.spiel.Geschwindigkeit = value;
 
 
-				Lbl_Geschwindigkeit.Text = "Geschwindigkeit: " + value;
-			
+				Lbl_Geschwindigkeit.Text = "Geschwindigkeit: " + value;			
 		}
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -177,33 +169,11 @@ namespace c1_gameoflife
 			this.spiel.Stop();
 		}
 
-		private void Cnvs_Spielfeld_MouseDown(object sender, MouseButtonEventArgs e)
-		{
-			int[] pos;
-            Point mousePos = e.GetPosition(Img_Spielfeld);
-            pos = this.spielfeldRenderer.GetClickedCell(this.spiel.Spielfeld, mousePos);
-
-			CanvasClicked.Text = "Clicked: Yes Pos(" + pos[0] + ";" + pos[1] + ")";
-
-			if (pos[0] < 0 || pos[0] > this.spiel.Spielfeld.Breite
-				|| pos[1] < 0 || pos[1] > this.spiel.Spielfeld.Hoehe)
-			{
-				return;
-			}
-
-			
-
-			this.spiel.Spielfeld.changePunkt(pos[0], pos[1]);
-			this.drawSpielfeld();
-		}
-
 		private void Img_Spielfeld_MouseDown(object sender, MouseButtonEventArgs e)
 		{
 			int[] pos;
 			Point mousePos = e.GetPosition(Img_Spielfeld);
 			pos = this.spielfeldRenderer.GetClickedCell(this.spiel.Spielfeld, mousePos);
-
-			CanvasClicked.Text = "Clicked: Yes Pos(" + pos[0] + ";" + pos[1] + ")";
 
 			if (pos[0] < 0 || pos[0] > this.spiel.Spielfeld.Breite
 				|| pos[1] < 0 || pos[1] > this.spiel.Spielfeld.Hoehe)

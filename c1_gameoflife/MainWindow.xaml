@@ -14,27 +14,15 @@
                            MaxHeight="120"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0"
-		    		Grid.Column="0"
-		    		Grid.ColumnSpan="9"
-                    Panel.ZIndex="5"
-					IsHitTestVisible="False"
-                    Visibility="Hidden">
-
-            <TextBlock x:Name="CanvasClicked"
-		    			   Text="Clicked: No"/>
-
-		</StackPanel>
-
         <Border x:Name="Border_Spielfeld" 
                 Grid.Column="0"
 				Grid.Row="0"
-				BorderThickness="1"
+				BorderThickness="0"
 				BorderBrush="LightGray"
 				Margin="75 10 75 10">
             <Image x:Name="Img_Spielfeld"
 				   Grid.Row="0"
-				   Margin="2"
+				   Margin="0"
                    Stretch="Fill"
 				   MouseDown="Img_Spielfeld_MouseDown"/>
         </Border>
