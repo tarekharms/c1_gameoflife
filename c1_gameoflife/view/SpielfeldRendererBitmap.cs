@@ -18,12 +18,24 @@ namespace c1_gameoflife.view
 
 		public void Draw(Spielfeld spielfeld)
 		{
-			int hoehe = (int)this.border.ActualHeight - 2*(int)this.border.BorderThickness.Left - 2*(int)this.image.Margin.Top;
-			int breite = (int)this.border.ActualWidth - 2*(int)this.border.BorderThickness.Left - 2*(int)this.image.Margin.Top;
-            int zellenBreite = hoehe / spielfeld.Hoehe;
-            int horizontalSpacing = (breite - zellenBreite * spielfeld.Breite) / 2;
+			int canvasHoehe = (int)this.border.ActualHeight - 2*(int)this.border.BorderThickness.Top - 2*(int)this.image.Margin.Top;
+            int canvasBreite = (int)this.border.ActualWidth - 2 * (int)this.border.BorderThickness.Left - 2 * (int)this.image.Margin.Left;
 
-            Bitmap bm = new Bitmap(breite, hoehe);
+            int zellenHoehe = canvasHoehe / spielfeld.Hoehe;
+            int zellenBreite = canvasBreite / spielfeld.Breite;
+
+            int seitenlaenge;
+
+            if (zellenBreite > zellenHoehe)
+                seitenlaenge = zellenHoehe;
+            else
+                seitenlaenge = zellenBreite;
+
+
+            int horizontalSpacing = (canvasBreite - seitenlaenge * spielfeld.Breite) / 2;
+            int verticalSpacing = (canvasHoehe - seitenlaenge * spielfeld.Hoehe) / 2;
+
+            Bitmap bm = new Bitmap(canvasBreite, canvasHoehe);
 
             using (Graphics gr = Graphics.FromImage(bm))
             {
@@ -45,10 +57,10 @@ namespace c1_gameoflife.view
                         }
 
                         Rectangle rect = new Rectangle(
-                            horizontalSpacing + x * zellenBreite,
-                            y * zellenBreite, 
-                            zellenBreite, 
-                            zellenBreite
+                            horizontalSpacing + x * seitenlaenge,
+                            verticalSpacing + y * seitenlaenge, 
+                            seitenlaenge, 
+                            seitenlaenge
                         );
 
                         gr.FillRectangle(new SolidBrush(fill), rect);
@@ -83,14 +95,15 @@ namespace c1_gameoflife.view
             int mouseX = (int)mousePoint.X;
             int mouseY = (int)mousePoint.Y;
 
-            int hoehe = (int)this.border.ActualHeight - 2 * (int)this.border.BorderThickness.Left - 2 * (int)this.image.Margin.Top;
-            int breite = (int)this.border.ActualWidth - 2 * (int)this.border.BorderThickness.Left - 2 * (int)this.image.Margin.Top;
+            int canvasHoehe = (int)this.border.ActualHeight - 2 * (int)this.border.BorderThickness.Top - 2 * (int)this.image.Margin.Top;
+            int canvasBreite = (int)this.border.ActualWidth - 2 * (int)this.border.BorderThickness.Left - 2 * (int)this.image.Margin.Left;
 
-            int zellenBreite = hoehe / spielfeld.Hoehe;
-            int horizontalSpacing = (breite - zellenBreite * spielfeld.Breite) / 2;
+            int seitenlaenge = canvasHoehe / spielfeld.Hoehe;
+            int horizontalSpacing = (canvasBreite - seitenlaenge * spielfeld.Breite) / 2;
+            int verticalSpacing = (canvasHoehe - seitenlaenge * spielfeld.Hoehe) / 2;
 
-            position[0] = (mouseX - horizontalSpacing - 3) / zellenBreite;
-            position[1] = (mouseY - 3)/ zellenBreite;
+            position[0] = (mouseX - horizontalSpacing) / seitenlaenge;
+            position[1] = (mouseY - verticalSpacing) / seitenlaenge;
 
             return position;
         }
