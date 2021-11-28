@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:c1_gameoflife"
         mc:Ignorable="d"
-        Title="Game Of Life" MinHeight="450" Height="450" MinWidth="800" Width="800" SizeChanged="Window_SizeChanged" Closing="Window_Closing">
+        Title="Game Of Life" MinHeight="450" Height="450" MinWidth="800" Width="800" SizeChanged="Window_SizeChanged" Closing="Window_Closing" Icon="ant.png">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="28*"/>
