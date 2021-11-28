@@ -5,6 +5,7 @@ using Microsoft.Win32;
 
 using c1_gameoflife.model;
 using c1_gameoflife.view;
+using c1_gameoflife.interfaces;
 
 namespace c1_gameoflife
 {
@@ -16,11 +17,14 @@ namespace c1_gameoflife
 		private ISpielfeldRenderer spielfeldRenderer;
 		private bool isDrawing = false;
 		bool play = false;
+
 		Spiel spiel;
+		ISavegame savegame;
 
 		public MainWindow()
 		{
-			this.spiel = new Spiel();
+			this.spiel = new Spiel(new RegelnKlassisch());
+			this.savegame = new SavegameHandler();
 
 			InitializeComponent();
 
@@ -116,7 +120,7 @@ namespace c1_gameoflife
 
 			if(result == true)
             {
-				SavegameHandler.save(this.spiel.Spielfeld, dialog.FileName);
+				this.savegame.save(this.spiel.Spielfeld, dialog.FileName);
 			}
 		}
 
@@ -130,14 +134,14 @@ namespace c1_gameoflife
 			if (result == true)
 			{
 				this.spiel.neuesSpiel(0, 0);
-				this.spiel.Spielfeld = SavegameHandler.load(dialog.FileName);
+				this.spiel.Spielfeld = this.savegame.load(dialog.FileName);
 				this.drawSpielfeld();
 			}
 		}
 
 		private void Button_Info_Click(object sender, RoutedEventArgs e)
 		{
-			string fullpath = System.IO.Path.GetFullPath("./praesentation.pdf");
+			string fullpath = System.IO.Path.GetFullPath("./handbuch.pdf");
 
 			if(System.IO.File.Exists(fullpath))
             {

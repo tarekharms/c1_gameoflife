@@ -1,6 +1,7 @@
 ﻿using System;
 
 using c1_gameoflife.model;
+using c1_gameoflife.interfaces;
 
 namespace ConsoleGameOfLife
 {
@@ -9,6 +10,7 @@ namespace ConsoleGameOfLife
 		static void Main(string[] args)
 		{
 			Spielfeld spielfeld = new Spielfeld(10, 10);
+			IRegeln regeln = new RegelnKlassisch();
 
 			spielfeld.fillRandom();
 
@@ -19,7 +21,7 @@ namespace ConsoleGameOfLife
 
 			while (true)
 			{
-				Regeln.regelnAnwendenSpielfeld(spielfeld);
+				regeln.regelnAnwendenSpielfeld(spielfeld);
 				printSpielfeld(spielfeld);
 				Console.ReadLine();
 			}

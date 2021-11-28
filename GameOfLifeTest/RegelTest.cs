@@ -1,6 +1,7 @@
 ﻿using System;
 using Xunit;
 using c1_gameoflife.model;
+using c1_gameoflife.interfaces;
 
 namespace GameOfLifeTest
 {
@@ -28,7 +29,8 @@ namespace GameOfLifeTest
         public void zellenRegelTest(string feld, sbyte status)
         {
             Spielfeld spielfeld = parseFromString(feld);
-            Regeln.regelnAnwendenSpielfeld(spielfeld);
+            IRegeln regelwerk = new RegelnKlassisch();
+            regelwerk.regelnAnwendenSpielfeld(spielfeld);
 
             Assert.Equal(status, spielfeld.getPunkt(1, 1));            
         }

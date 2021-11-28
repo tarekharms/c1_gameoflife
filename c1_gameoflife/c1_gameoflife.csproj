@@ -56,6 +56,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="interfaces\IRegeln.cs" />
+    <Compile Include="interfaces\ISavegame.cs" />
     <Compile Include="model\SavegameHandler.cs" />
     <Compile Include="view\ISpielfeldRenderer.cs" />
     <Compile Include="view\NeuesSpiel.xaml.cs">
@@ -81,7 +83,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="model\Regeln.cs" />
+    <Compile Include="model\RegelnKlassisch.cs" />
     <Compile Include="model\Spiel.cs" />
     <Compile Include="model\Spielfeld.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
