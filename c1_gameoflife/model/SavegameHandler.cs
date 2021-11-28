@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
+using c1_gameoflife.interfaces;
+
 namespace c1_gameoflife.model
 {
-    public class SavegameHandler
+    public class SavegameHandler : ISavegame
     {
-        public static void save(Spielfeld spielfeld, string filePath)
+        public void save(Spielfeld spielfeld, string filePath)
         {
             List<string> lines = new List<string>();
 
@@ -25,7 +27,7 @@ namespace c1_gameoflife.model
             File.WriteAllLines(filePath, lines, Encoding.ASCII);
         }
 
-        public static Spielfeld load(string filePath)
+        public Spielfeld load(string filePath)
         {
             string[] lines = File.ReadAllLines(filePath);
             Spielfeld spielfeld = new Spielfeld(lines[0].Length, lines.Length);

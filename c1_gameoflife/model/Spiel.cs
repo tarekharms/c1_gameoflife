@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading;
 
+using c1_gameoflife.interfaces;
+
 namespace c1_gameoflife.model
 {
 	public class Spiel
@@ -34,6 +36,7 @@ namespace c1_gameoflife.model
 
 		public event EventHandler SpielfeldUpdate;
 
+		private IRegeln regelwerk;
 		private Spielfeld spielfeld;
 		public Spielfeld Spielfeld
 		{
@@ -47,9 +50,10 @@ namespace c1_gameoflife.model
             }
 		}
 
-		
-		public Spiel()
+
+		public Spiel(IRegeln regelwerk)
 		{
+			this.regelwerk = regelwerk;
 			this.geschwindigkeit = 10;
 			this.generation = 0;
 			this.play = false;
@@ -116,7 +120,7 @@ namespace c1_gameoflife.model
 		public void step()
 		{
 			this.generation++;
-			Regeln.regelnAnwendenSpielfeld(spielfeld);
+			this.regelwerk.regelnAnwendenSpielfeld(spielfeld);
 			this.OnSpielfeldUpdate(new EventArgs());
         }
 	}
