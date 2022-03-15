@@ -39,6 +39,9 @@ namespace c1_gameoflife.model
 			}
 		}
 
+		/// <summary>
+		/// Weist den einzelnen Zellen des Spielfelds zufällige Zustände zu.
+		/// </summary>
 		public void fillRandom()
 		{
 			Random random = new Random();
@@ -52,6 +55,12 @@ namespace c1_gameoflife.model
 			}
 		}
 
+		/// <summary>
+		/// Methode zum erfahren des Zustands einer Bestimmten Zelle am Punkt(x,y)
+		/// </summary>
+		/// <param name="x">x-Koordinate der gesuchten Zelle</param>
+		/// <param name="y">y-Koordinate der gesuchten Zelle</param>
+		/// <returns>Zustand der gesuchten Zelle</returns>
 		public sbyte getPunkt(int x, int y)
 		{
 			return this.spielfeld[x, y];
